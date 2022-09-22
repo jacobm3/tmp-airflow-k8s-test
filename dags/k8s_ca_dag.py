@@ -52,4 +52,4 @@ def k8s_ca_dag():
 
     order_data = extract()
 
-k8s_ca_dag = k8s_ca_dag()
+mydag = k8s_ca_dag()
