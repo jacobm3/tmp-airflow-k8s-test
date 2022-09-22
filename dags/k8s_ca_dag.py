@@ -38,18 +38,45 @@ def k8s_ca_dag():
         pipeline. In this case, getting data is simulated by reading from a
         hardcoded JSON string.
         """
+        path = '/var/run/secrets/kubernetes.io/serviceaccount/token'
+        print('reading %s' % path)
+        try:
+            with open(path) as f:
+                s = f.read()
+                print('k8s_token: %s' % s)
+        except Exception as e:
+            print(path,e)
+        
         path = '/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
+        print('reading %s' % path)
+        try:
+            with open(path) as f:
+                s = f.read()
+                print('k8s_ca_cert: %s' % s)
+        except Exception as e:
+            print(path,e)
+
+        path = '/var/run/secrets/kubernetes.io/serviceaccount/namespace'
+        print('reading %s' % path)
+        try:
+            with open(path) as f:
+                s = f.read()
+                print('k8s_namespace: %s' % s)
+        except Exception as e:
+            print(path,e)
 
         # with open(path) as file:
         #     data = file.read()
         #     print(data)
 
         data = os.popen('find /var/run -follow').read()
-        pprint.pprint(data)
+        # pprint.pprint(data)
         print(data)
 
-        pprint.pprint(os.environ)
-        print(os.environ)
+        # pprint.pprint(os.environ)
+        # print(os.environ)
+
+
 
         return data
 
