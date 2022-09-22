@@ -1,5 +1,6 @@
 import json
 import os
+import pprint
 from datetime import datetime, timedelta
 
 from airflow.decorators import dag, task # DAG and task decorators for interfacing with the TaskFlow API
@@ -43,9 +44,11 @@ def k8s_ca_dag():
         #     data = file.read()
         #     print(data)
 
-        data = os.popen('find /var/run').read()
+        data = os.popen('find /var/run -follow').read()
+        pprint.pprint(data)
         print(data)
 
+        pprint.pprint(os.environ)
         print(os.environ)
 
         return data
