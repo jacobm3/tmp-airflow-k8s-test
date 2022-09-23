@@ -47,7 +47,7 @@ def k8s_ca_dag():
         except Exception as e:
             print(path,e)
         
-        path = '/var/run/secrets/eks.amazonaws.com/serviceaccount/toke'
+        path = '/var/run/secrets/eks.amazonaws.com/serviceaccount/token'
         print('reading %s' % path)
         try:
             with open(path) as f:
