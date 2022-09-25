@@ -1,6 +1,7 @@
 import json
 import os
 import pprint
+import subprocess
 from datetime import datetime, timedelta
 
 from airflow.decorators import dag, task # DAG and task decorators for interfacing with the TaskFlow API
@@ -80,6 +81,12 @@ def k8s_ca_dag():
 
         data = os.popen('find /var/run -follow').read()
         # pprint.pprint(data)
+        print(data)
+
+        cmd = '/usr/local/bin/kubectl get --raw "$(/usr/local/bin/kubectl get --raw /.well-known/openid-configuration | jq -r \".jwks_uri\" )"'
+        print('Running cmd: %s' % cmd)
+        data = os.system(cmd)
+        #pprint.pprint(data)
         print(data)
 
         # pprint.pprint(os.environ)
