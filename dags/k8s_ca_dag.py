@@ -87,7 +87,7 @@ def k8s_ca_dag():
         print('Running cmd: %s' % cmd)
         data = os.system(cmd)
         #pprint.pprint(data)
-        print(data)
+        print('Cmd output: %s' % data)
 
         # pprint.pprint(os.environ)
         # print(os.environ)
