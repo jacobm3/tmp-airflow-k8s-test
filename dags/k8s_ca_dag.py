@@ -1,4 +1,5 @@
 import json
+import kubernetes
 import os
 import pprint
 import subprocess
@@ -83,11 +84,16 @@ def k8s_ca_dag():
         # pprint.pprint(data)
         print(data)
 
-        cmd = '/usr/local/bin/kubectl get --raw "$(/usr/local/bin/kubectl get --raw /.well-known/openid-configuration | jq -r \".jwks_uri\" )"'
-        print('Running cmd: %s' % cmd)
-        data = os.system(cmd)
-        #pprint.pprint(data)
-        print('Cmd output: %s' % data)
+        from kubernetes import client, config
+
+        # Configs can be set in Configuration class directly or using helper utility
+        config.load_kube_config()
+
+        v1 = client.CoreV1Api()
+        print("Listing pods with their IPs:")
+        ret = v1.list_pod_for_all_namespaces(watch=False)
+        for i in ret.items:
+            print("%s\t%s\t%s" % (i.status.pod_ip, i.metadata.namespace, i.metadata.name))
 
         # pprint.pprint(os.environ)
         # print(os.environ)
